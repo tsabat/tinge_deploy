@@ -1,0 +1,8 @@
+server {
+    listen 80;
+
+    root /var/www/tinge/current/public;
+
+    # Turn on Passenger
+    passenger_enabled on;
+}
