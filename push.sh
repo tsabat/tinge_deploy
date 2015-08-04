@@ -11,14 +11,16 @@ then
 fi
 
 cd versions
-mkdir -p $NOW
-cp /var/www/tinge/versions/$NOW $NOW/code/$NOW
+mkdir -p $NOW/code
+cp -r /var/www/tinge/versions/$NOW $NOW/code/$NOW
 mkdir $NOW/scripts
-cp ../scripts/* $NOW/scripts
+cp -r ../scripts/* $NOW/scripts
 echo $NOW > $NOW/version.txt
+
 cp ../appspec.yml $NOW
 
 aws deploy push \
   --application-name tinge_hello_world_application \
   --s3-location "s3://tinge-codedeploy/$NOW.zip" \
-  --source $NOW
+  --source $NOW \
+  --region us-west-2

@@ -2,12 +2,10 @@
 
 set -ex
 
-# get to version dir
-cd /var/www/tinge/versions
-
 # get last directory and chop the trailing slash
-VERSION=$(ls -d */ | head -1 | sed -e 's#/$##')
+VERSION=$(cat /var/www/tinge/current_deployment_version.txt)
 
+mv /var/www/tinge/current_deployment /var/www/tinge/versions/$VERSION
 # symlink the dir
 ln -snf /var/www/tinge/versions/$VERSION /var/www/tinge/current
 

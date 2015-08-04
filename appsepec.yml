@@ -23,8 +23,10 @@ os: linux
 #   "files" section altogether. A blank or incomplete "files" section
 #   may cause associated deployments to fail.
 files:
-  - source: /code
-    destination: /var/www/tinge/versions/REPLACE_VERSION
+  - source: ./code
+    destination: /var/www/tinge/current_deployment
+  - source: ./version.txt
+    destination: /var/www/tinge/current_deployment_version.txt
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions"
 #   section here that describes special permissions to apply to the files
