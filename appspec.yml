@@ -26,7 +26,7 @@ files:
   - source: ./code
     destination: /var/www/tinge/current_deployment
   - source: ./version.txt
-    destination: /var/www/tinge/current_deployment_version.txt
+    destination: /var/www/tinge
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions"
 #   section here that describes special permissions to apply to the files
@@ -97,19 +97,19 @@ hooks:
 #       runas:
 # # During the AfterInstall deployment lifecycle event, run the commands
 # #   in the script specified in "location".
-#   AfterInstall:
-#     - location:
-#       timeout:
-#       runas:
+   AfterInstall:
+     - location: scripts/after_install.sh
+       timeout: 30
+       runas: root
 #     - location:
 #       timeout:
 #       runas:
 # During the ApplicationInstall deployment lifecycle event, run the commands
 #   in the script specified in "location".
-  ApplicationStart:
-    - location: scripts/application_start.sh
-      timeout: 30
-      runas: root
+#   ApplicationStart:
+#     - location: scripts/application_start.sh
+#       timeout: 30
+#       runas: root
 # During the ValidateService deployment lifecycle event, run the commands
 #   in the script specified in "location".
 #   ValidateService:
