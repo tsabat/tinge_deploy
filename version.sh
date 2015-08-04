@@ -2,7 +2,14 @@
 
 set -ex
 
-NOW=$(date +"%Y-%m-%d_%k-%M-%S")
+if [ -z "$1" ];
+then
+  NOW=$(date +"%Y-%m-%d_%k-%M-%S")
+else
+  echo 'using passed in value'
+  NOW=$1
+fi
+
 REPO=https://github.com/tsabat/example_rails.git
 
 sudo -i -u deploy bash <<HERE
