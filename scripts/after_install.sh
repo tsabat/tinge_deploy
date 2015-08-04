@@ -5,7 +5,7 @@ set -ex
 # get last directory and chop the trailing slash
 VERSION=$(cat /var/www/tinge/version.txt)
 
-mv /var/www/tinge/current_deployment /var/www/tinge/versions/$VERSION
+mv /var/www/tinge/current_deployment/$VERSION /var/www/tinge/versions/$VERSION
 # symlink the dir
 ln -snf /var/www/tinge/versions/$VERSION /var/www/tinge/current
 
