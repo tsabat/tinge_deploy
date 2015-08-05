@@ -1,5 +1,10 @@
 #!/bin/bash
 
 # clean up
-rm -rf /var/www/tinge/current_deployment
-rm /var/www/tinge/version.txt
+if [ -d /var/www/tinge/current_deployment ]; then
+  rm -rf /var/www/tinge/current_deployment
+fi
+
+if [ -f /var/www/tinge/version.txt ]; then
+  rm -rf /var/www/tinge/version.txt
+fi
