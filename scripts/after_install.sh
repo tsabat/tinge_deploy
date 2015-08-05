@@ -18,5 +18,12 @@ rm /var/www/tinge/version.txt
 # set owner
 chown -R deploy:deploy /var/www/tinge/versions
 
-# restart
-passenger-config restart-app /var/www/tinge/current
+# if the applicaiton groups shows up in passenger status
+# than we can assume we need a restart
+# otherwise, the first call to the app starts it
+LINES=$(passenger-status | grep 'Application groups' -A 1 | wc -l)
+
+if [ "$LINES" -gt 1 ]
+then
+  passenger-config restart-app /var/www/tinge/current
+fi
