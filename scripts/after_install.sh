@@ -10,7 +10,10 @@ mv /var/www/tinge/current_deployment/$VERSION /var/www/tinge/versions/$VERSION
 ln -snf /var/www/tinge/versions/$VERSION /var/www/tinge/current
 
 echo $VERSION > /var/www/tinge/current/version.txt
-rm /var/www/tinge/current_deployment
+
+# clean up
+rm -rf /var/www/tinge/current_deployment
+rm /var/www/tinge/version.txt
 
 # set owner
 chown -R deploy:deploy /var/www/tinge/versions
