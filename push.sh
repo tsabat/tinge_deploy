@@ -2,8 +2,11 @@
 
 set -ex
 
-# NOW is the deploy name
+# this is just nice, adding a random word to the revision name
+# so we can view it easily in the listing
+WORD=$(shuf -n1  /usr/share/dict/words | sed s/\'s//g |  awk '{print toupper($0)}')
 NOW=$(date +"%Y-%m-%d_%k-%M-%S")
+NOW="$NOW-$WORD"
 
 # the version script creates the symlink structure
 # that phusion passenger understands
