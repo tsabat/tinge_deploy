@@ -2,7 +2,7 @@
 
 let's get this off the ground.
 
-Ok, so we've got a pretty decent deploy process in place.  It uses opsworks and
+Ok, so we've got a pretty decent deploy process in place.  It uses codedeploy and
 some bash scripts to make things run.  You can replace ansible with all this, but
 i'm not sure it'll do you much better than what we have.
 
