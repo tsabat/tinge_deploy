@@ -21,8 +21,8 @@ case $key in
     REPO="$2"
     shift # past argument
     ;;
-    -n|--now)
-    NOW="$2"
+    -v|--revision)
+    REVISION="$2"
     shift # past argument
     ;;
     *)
@@ -33,7 +33,7 @@ shift # past argument or value
 done
 echo APP       = "${APP}"
 echo REPO      = "${REPO}"
-echo NOW       = "${$NOW}"
+echo REVISION  = "${REVISION}"
 
 if [ -z "$APP" ]; then
   echo "app is required!"
@@ -45,8 +45,8 @@ if [ -z "$REPO" ]; then
   EXIT=true
 fi
 
-if [ -z "$NOW" ]; then
-  echo "now is required!"
+if [ -z "$REVISION" ]; then
+  echo "revision is required!"
   EXIT=true
 fi
 
@@ -74,7 +74,7 @@ bundle install --without test development --path vendor
 RAILS_ENV=production bin/rake assets:precompile
 
 cd ..
-cp -r $REPO_DIR versions/$NOW
-rm -rf versions/$NOW/.git
-ln -snf /var/www/tinge/versions/$NOW /var/www/tinge/current
+cp -r $REPO_DIR versions/$REVISION
+rm -rf versions/$REVISION/.git
+ln -snf /var/www/tinge/versions/$REVISION /var/www/tinge/current
 HERE

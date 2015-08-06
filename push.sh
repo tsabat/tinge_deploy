@@ -51,12 +51,12 @@ fi
 # this is just nice, adding a random word to the revision name
 # so we can view it easily in the listing
 WORD=$(shuf -n1  /usr/share/dict/words | sed s/\'s//g |  awk '{print toupper($0)}')
-NOW=$(date +"%Y-%m-%d_%k-%M-%S")
-NOW="$APP-$NOW-$WORD"
+REVISION=$(date +"%Y-%m-%d_%k-%M-%S")
+REVISION="$APP-$REVISION-$WORD"
 
 # the version script creates the symlink structure
 # that phusion passenger understands
-./version.sh -a $APP -r $REPO -n $NOW
+./version.sh -a $APP -r $REPO -v $REVISION
 
 # then we create a versions folder of our own for the
 # bundle we send to s3
@@ -70,29 +70,29 @@ fi
 ######################################################################
 #
 # NOTE:
-# * The date 2015-08-06_13_03_28 is the result of the $NOW variable
-# * The the version.txt also contains the $NOW value
+# * The date 2015-08-06_13_03_28 is the result of the $REVISION variable
+# * The the version.txt also contains the $REVISION value
 # * the appspec.yml is defined here: http://docs.aws.amazon.com/codedeploy/latest/userguide/app-spec-ref.html
 # * the scripts dir contains the lifecycle hooks defined in the appspec
-# * the code => $NOW folder contains the ruby code
+# * the code => $REVISION folder contains the ruby code
 #
-# └── 2015-08-06_13-03-28
+# └── app_name-2015-08-06_13-03-28-random_word
 #    ├── appspec.yml
 #    ├── code
-#    │   └── 2015-08-06_13-03-28
+#    │   └── app_name-2015-08-06_13-03-28-random_word
 #    ├── scripts
 #    │   ├── after_install.sh
 #    │   └── application_stop.sh
 #    └── version.txt
 
 cd versions
-mkdir -p $NOW/code
-cp -r /var/www/tinge/versions/$NOW $NOW/code/$NOW
-mkdir $NOW/scripts
-cp -r ../scripts/* $NOW/scripts
-echo $NOW > $NOW/version.txt
+mkdir -p $REVISION/code
+cp -r /var/www/tinge/versions/$REVISION $REVISION/code/$REVISION
+mkdir $REVISION/scripts
+cp -r ../scripts/* $REVISION/scripts
+echo $REVISION > $REVISION/version.txt
 
-cp ../appspec.yml $NOW
+cp ../appspec.yml $REVISION
 
 #####################################################
 # now that the bundle is built, we'll send it to the
@@ -101,8 +101,8 @@ cp ../appspec.yml $NOW
 #####################################################
 RSLT=$(aws deploy push \
   --application-name tinge_hello_world_application \
-  --s3-location "s3://tinge-codedeploy/$NOW.zip" \
-  --source $NOW \
+  --s3-location "s3://tinge-codedeploy/$REVISION.zip" \
+  --source $REVISION \
   --region us-west-2)
 
 #################################################
