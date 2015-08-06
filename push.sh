@@ -2,6 +2,52 @@
 
 set -ex
 
+while [[ $# > 1 ]]
+do
+key="$1"
+
+case $key in
+    -a|--application)
+    APP="$2"
+    shift # past argument
+    ;;
+    -r|--repo)
+    REPO="$2"
+    shift # past argument
+    ;;
+    -g|--group)
+    GROUP="$2"
+    shift # past argument
+    ;;
+    *)
+            # unknown option
+    ;;
+esac
+shift # past argument or value
+done
+echo APP       = "${APP}"
+echo REPO      = "${REPO}"
+echo GROUP     = "${GROUP}"
+
+if [ -z "$APP" ]; then
+  echo "app is required!"
+  EXIT=true
+fi
+
+if [ -z "$REPO" ]; then
+  echo "repo is required!"
+  EXIT=true
+fi
+
+if [ -z "$GROUP" ]; then
+  echo "group is required!"
+  EXIT=true
+fi
+
+if [[ "$EXIT" == true ]]; then
+  exit 1
+fi
+
 # this is just nice, adding a random word to the revision name
 # so we can view it easily in the listing
 WORD=$(shuf -n1  /usr/share/dict/words | sed s/\'s//g |  awk '{print toupper($0)}')
@@ -10,7 +56,7 @@ NOW="$NOW-$WORD"
 
 # the version script creates the symlink structure
 # that phusion passenger understands
-./version.sh $NOW
+./version.sh -a $APP -r $REPO -n $NOW
 
 # then we create a versions folder of our own for the
 # bundle we send to s3

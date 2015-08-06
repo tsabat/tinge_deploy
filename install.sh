@@ -69,6 +69,9 @@ apt-get install -y nodejs
 ## configure app server
 ########################
 
+# add the dictionary for the random words for revisions
+apt-get install -y --reinstall wamerican
+
 # enable passenger by uncommenting/replacing passenger_root and passenger_ruby
 sed -i 's|^.*# passenger_ruby .*|        passenger_ruby /home/deploy/.rbenv/shims/ruby;|' /etc/nginx/nginx.conf
 sed -i 's|^.*# passenger_root |        passenger_root |' /etc/nginx/nginx.conf
