@@ -52,7 +52,7 @@ fi
 # so we can view it easily in the listing
 WORD=$(shuf -n1  /usr/share/dict/words | sed s/\'s//g |  awk '{print toupper($0)}')
 NOW=$(date +"%Y-%m-%d_%k-%M-%S")
-NOW="$NOW-$WORD"
+NOW="$APP-$NOW-$WORD"
 
 # the version script creates the symlink structure
 # that phusion passenger understands
@@ -129,8 +129,8 @@ RSLT=$(echo $RSLT | cut -d ' ' -f 1)
 # this is the real call, which makes a deployment for you
 #########################################################
 aws deploy create-deployment \
-  --application-name tinge_hello_world_application \
+  --application-name $APP \
   --s3-location $RSLT \
-  --deployment-group-name tinge_hello_world_as_group \
+  --deployment-group-name $GROUP \
   --region us-west-2 \
   --description 'super-rad application'
